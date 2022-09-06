@@ -1,0 +1,18 @@
+{% block content %}
+<table>
+    <tr>
+        <th>ID</th>
+        <th>Container Name</th>
+        <th>CPU Usage %</th>
+        <th>Memory Usage %</th>
+    </tr>
+  {% for container in containers %}
+  <tr>
+    <td>{{container['id']}}</td>
+    <td>{{container['name']}}</td> 
+    <td>{{container['cpu']}}</td> 
+    <td>{{container['memory']}}</td>
+  </tr>
+  {% endfor %}
+  </table>
+{% endblock %}
