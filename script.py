@@ -1,6 +1,7 @@
 from flask import Flask, render_template 
 import docker 
 import json
+import os  
 
 def calculate_cpu_percent(cpu_stats, precpu_stats):
     cpu_count = cpu_stats["online_cpus"]
@@ -34,6 +35,10 @@ def resource_table():
                	cpu = calculate_cpu_percent(container_stats['cpu_stats'], container_stats['precpu_stats'])
                 memory = calculate_memory_percent(container_stats['memory_stats'])
                 containers.append({"id": id, "name": name, "cpu":cpu, "memory":memory})
+
+                file = open(os.path.join('./resource_logs', id), 'a')
+                file.write(str(cpu) + " " + str(memory)+ "\n")
+                file.close()
 
         return render_template('resource_table.html', containers=containers)
 
