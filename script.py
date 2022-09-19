@@ -16,13 +16,13 @@ def calculate_cpu_percent(cpu_stats, precpu_stats):
 def calculate_memory_percent(memory_stats):
    return round(float(memory_stats['usage'])/float(memory_stats['limit'])*100,2)
 
-def calculate_network_in_out(container_stats):
+def calculate_network_in_out(network_stats):
         conversion_costant = 1024
         network_in = 0
         network_out = 0 
-        for interface in container_stats['networks']:
-                network_in += container_stats["networks"][interface]['rx_bytes']
-                network_out += container_stats["networks"][interface]['tx_bytes']
+        for interface in network_stats:
+                network_in += network_stats[interface]['rx_bytes']
+                network_out += network_stats[interface]['tx_bytes']
 
         return network_in/conversion_costant, network_out/conversion_costant
 
@@ -73,7 +73,7 @@ def compute_container_stats(container_stats):
         name = container_stats['name']
        	cpu = calculate_cpu_percent(container_stats['cpu_stats'], container_stats['precpu_stats'])
         memory = calculate_memory_percent(container_stats['memory_stats'])
-        network_in, network_out = calculate_network_in_out(container_stats) 
+        network_in, network_out = calculate_network_in_out(container_stats['networks']) 
 
         return dict({"name": name, "cpu":cpu, "memory":memory, "network_in":network_in, "network_out":network_out})
 
