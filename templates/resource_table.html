@@ -5,6 +5,8 @@
         <th>Container Name</th>
         <th>CPU Usage %</th>
         <th>Memory Usage %</th>
+        <th>Network In (KB)</th>
+        <th>Network Out (KB)</th>
     </tr>
   {% for container in containers %}
   <tr>
@@ -12,6 +14,8 @@
     <td>{{container['name']}}</td> 
     <td>{{container['cpu']}}</td> 
     <td>{{container['memory']}}</td>
+    <td>{{container['network_in']}}</td> 
+    <td>{{container['network_out']}}</td>
   </tr>
   {% endfor %}
   </table>
